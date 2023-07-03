@@ -18,14 +18,11 @@ const App = () => {
       <View>
         <Text style={styles.titleApp}>Balagan</Text>
       </View>
-      <View>
-        <Image
-          // style={styles.beginImage}
-          source={require('./')}
-        />
+      <View style={styles.imgContainer}>
+        <Image style={styles.beginImage} source={require('./assets/beginImg.jpg')} />
       </View>
       <Pressable style={styles.beginPressable}>
-        <Text style={styles.pressapleText}>Начать пользоваться</Text>
+        <Text style={styles.pressapleText}>Начать пользоватся</Text>
       </Pressable>
     </SafeAreaView>
   )
@@ -53,7 +50,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     color: '#fff',
+    textAlign: 'center',
   },
+  beginImage: {
+    width: 300,
+    height: 300
+  },
+  imgContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 
 
