@@ -15,7 +15,7 @@ import {
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={{marginTop: 20}}>
         <Text style={styles.titleApp}>Balagan</Text>
       </View>
       <View style={styles.imgContainer}>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '90%',
     borderRadius: 5,
+    marginBottom: 20,
   },
   pressapleText: {
     fontWeight: 'bold',
