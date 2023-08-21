@@ -36,12 +36,9 @@ const RegisterScreen = ({navigation}) => {
             fontWeight: '500',
             color: '#333',
             marginBottom: 30,
+            textAlign: 'center'
           }}>
           Register
-        </Text>
-
-        <Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>
-          Or, register with email ...
         </Text>
 
         <InputField

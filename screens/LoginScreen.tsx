@@ -29,12 +29,13 @@ const LoginScreen = ({navigation}) => {
               fontWeight: '500',
               color: '#333',
               marginBottom: 30,
+              textAlign: 'center',
             }}>
             Login
           </Text>
 
           <InputField
-            label={'Email ID'}
+            label={'Email'}
             keyboardType="email-address"
           />
 
