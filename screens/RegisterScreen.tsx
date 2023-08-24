@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -12,8 +12,12 @@ import {
 import InputField from '../components/InputField';
 
 import CustomButton from '../components/CustomButton';
+import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../types";
 
-const RegisterScreen = ({navigation}) => {
+type Props = NativeStackScreenProps<RootStackParamList, "Register">;
+
+const RegisterScreen: FC<Props> = ({navigation}) => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 

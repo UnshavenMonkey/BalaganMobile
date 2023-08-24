@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,9 +9,12 @@ import {
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import InputField from "../components/InputField";
+import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../types";
 
+type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen: FC<Props> = ({navigation}) => {
     return (
       <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
         <View style={{paddingHorizontal: 25}}>
