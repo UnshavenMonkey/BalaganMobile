@@ -3,8 +3,6 @@ import {
   SafeAreaView,
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   Image, Pressable,
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
@@ -45,7 +43,6 @@ const LoginScreen: FC<Props> = ({navigation}) => {
           <InputField
             label={'Password'}
             inputType="password"
-            fieldButtonLabel={'Forgot?'}
             fieldButtonFunction={() => {}}
           />
 
