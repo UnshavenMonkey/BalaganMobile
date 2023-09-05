@@ -6,7 +6,7 @@ import {createAppStore} from "./store";
 import { Provider } from 'react-redux';
 import {getStateFromAsyncStorage} from "../common-utils";
 
-const state = getStateFromAsyncStorage();
+const state = getStateFromAsyncStorage().then(res => res);
 // @ts-ignore
 const store = createAppStore(state);
 

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Image, Pressable, SafeAreaView, Text, View,} from 'react-native';
 
 import InputField from '../components/InputField';
@@ -6,11 +6,40 @@ import InputField from '../components/InputField';
 import CustomButton from '../components/CustomButton';
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../types";
+import {useAppDispatch} from "../app/store";
+import {register} from "../features/system/system-slice";
+import {isAxiosError} from "axios";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Register">;
 
 const RegisterScreen: FC<Props> = ({navigation}) => {
+	const dispatch = useAppDispatch();
+	const [userName, setUserName] = useState('')
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [confirmPassword, setConfirmPassword] = useState('')
 
+	console.log(password)
+
+	const handleRegister = async () => {
+		try {
+			const data = {
+				username: userName,
+				email: email,
+				first_name: firstName,
+				last_name: lastName,
+				password: password
+			};
+			await dispatch(register.getThunk({...data})).then(res => console.log(res));
+		} catch (e) {
+			console.log(e)
+			if (isAxiosError(e) && e.response?.status === 400) {
+				const responseError = await e.response;
+			}
+		}
+	};
 
 
 	return (
@@ -39,33 +68,44 @@ const RegisterScreen: FC<Props> = ({navigation}) => {
 				<View style={{flex: 3}}>
 					<InputField
 						label={'User Name'}
+						value={userName}
+						onChangeText={setUserName}
 					/>
 
 					<InputField
 						label={'First Name'}
+						value={firstName}
+						onChangeText={setFirstName}
 					/>
 
 					<InputField
 						label={'Last Name'}
+						value={lastName}
+						onChangeText={setLastName}
 					/>
 
 					<InputField
 						label={'Email'}
 						keyboardType="email-address"
+						value={email}
+						onChangeText={setEmail}
 					/>
 
 					<InputField
 						label={'Password'}
 						inputType="password"
+						value={password}
+						onChangeText={setPassword}
 					/>
 
 					<InputField
 						label={'Confirm Password'}
 						inputType="password"
+						value={confirmPassword}
+						onChangeText={setConfirmPassword}
 					/>
 
-					<CustomButton label={'Register'} onPress={() => {
-					}}/>
+					<CustomButton label={'Register'} onPress={handleRegister}/>
 
 					<View
 						style={{

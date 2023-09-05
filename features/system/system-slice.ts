@@ -146,13 +146,13 @@ type RegisterResponse = {
 	user_permissions: number[]
 }
 export const register = createAppAsyncThunk<
-	{ username: string, first_name: string, last_name: string, email: string; password: string },
+	{ password: string, username: string, first_name: string, last_name: string, email: string  },
 	RegisterResponse
->('system/register', async ({ first_name, last_name, email,  username, password }, {dispatch, state}) =>
+>('system/register', async ({ password, first_name, last_name, email,  username }, {dispatch, state}) =>
 	makeApiRequest<RegisterResponse>({
-		url: `${BACKEND_API_URL}/auth/register`,
+		url: `${BACKEND_API_URL}/auth/register/`,
 		method: 'post',
-		data: { first_name, last_name, email,  username, password },
+		data: { password, first_name, last_name, email,  username },
 	}, { dispatch, sessionTokens: selectSessionTokens(state) })
 );
 
