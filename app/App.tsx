@@ -6,8 +6,8 @@ import {createAppStore} from "./store";
 import { Provider } from 'react-redux';
 import {getStateFromAsyncStorage} from "../common-utils";
 
-const state = getStateFromAsyncStorage().then(res => res);
-// @ts-ignore
+const state = getStateFromAsyncStorage()
+
 const store = createAppStore(state);
 
 const Stack = createNativeStackNavigator();

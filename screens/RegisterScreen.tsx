@@ -20,10 +20,28 @@ const RegisterScreen: FC<Props> = ({navigation}) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
-
-	console.log(password)
-
+	const [confirmPasswordError, setConfirmPasswordError] = useState<string>('');
+	const [passwordError, setPasswordError] = useState<string>('');
 	const handleRegister = async () => {
+		let isInputValid = true;
+		if (password !== confirmPassword) {
+			setPasswordError('Пароли не совпадают');
+			setConfirmPasswordError('Пароли не совпадают');
+			isInputValid = false;
+		}
+
+		if (!password.length) {
+			setPasswordError('Слишком короткий пароль');
+			isInputValid = false;
+		}
+
+		if (!confirmPassword.length) {
+			setConfirmPasswordError('Слишком короткий пароль');
+			isInputValid = false;
+		}
+
+		if (!isInputValid) return;
+
 		try {
 			const data = {
 				username: userName,
@@ -33,6 +51,7 @@ const RegisterScreen: FC<Props> = ({navigation}) => {
 				password: password
 			};
 			await dispatch(register.getThunk({...data})).then(res => console.log(res));
+			navigation.navigate('Login');
 		} catch (e) {
 			console.log(e)
 			if (isAxiosError(e) && e.response?.status === 400) {
@@ -97,6 +116,7 @@ const RegisterScreen: FC<Props> = ({navigation}) => {
 						value={password}
 						onChangeText={setPassword}
 					/>
+					<Text style={{color: 'red', marginBottom: 5}}>{passwordError}</Text>
 
 					<InputField
 						label={'Confirm Password'}
@@ -104,6 +124,7 @@ const RegisterScreen: FC<Props> = ({navigation}) => {
 						value={confirmPassword}
 						onChangeText={setConfirmPassword}
 					/>
+					<Text style={{color: 'red', marginBottom: 5}}>{confirmPasswordError}</Text>
 
 					<CustomButton label={'Register'} onPress={handleRegister}/>
 

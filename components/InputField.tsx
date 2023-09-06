@@ -25,7 +25,7 @@ const InputField: FC<InputFieldProps> = ({
         borderBottomColor: '#ccc',
         borderBottomWidth: 1,
         paddingBottom: 8,
-        marginBottom: 25,
+        marginBottom: 5,
       }}>
       {inputType == 'password' ? (
         <TextInput

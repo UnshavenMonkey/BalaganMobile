@@ -13,7 +13,7 @@ export type RootState = ReturnType<typeof reducer>;
 export const createAppStore = (initialState?: Partial<RootState>) =>
 	configureStore({
 		reducer,
-		// preloadedState: initialState,
+		preloadedState: initialState,
 	});
 
 export type AppDispatch = ReturnType<typeof createAppStore>['dispatch'];

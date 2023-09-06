@@ -5,7 +5,9 @@ import {AppDispatch, AppThunk, RootState} from "./app/store";
 import {SessionTokens, setSessionTokens} from "./features/system/system-slice";
 import {BACKEND_API_URL} from "./common-consts";
 
-export const getStateFromAsyncStorage = async () => {
+export const getStateFromAsyncStorage = () => {
+	let storage
+	async function retrieveUserSession() {
 		try {
 			const session = await EncryptedStorage.getItem("user_session");
 			if (!!session) {
@@ -21,6 +23,9 @@ export const getStateFromAsyncStorage = async () => {
 			console.log(error)
 		}
 		return {system: null}
+	}
+	retrieveUserSession().then(res => storage = res)
+	return storage;
 };
 
 export function createAsyncActions<T = void>(actionPrefix: string) {
