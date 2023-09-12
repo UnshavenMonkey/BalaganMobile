@@ -104,15 +104,16 @@ export function setSessionTokens(tokens: SessionTokens): AppThunk<void> {
 type LoginResponse = SessionTokens & UserType;
 
 export const login = createAppAsyncThunk<
-	{ username: string; password: string },
+	{ email: string; password: string },
 	LoginResponse
->('system/login', async ({ username, password }) => {
+>('system/login', async ({ email, password }) => {
 	const { data } = await axios<LoginResponse>({
-		url: `${BACKEND_API_URL}/auth/login`,
+		url: `${BACKEND_API_URL}/auth/login/`,
 		method: 'post',
-		data: { username, password },
+		data: { email, password },
 	});
 	const { id, accessToken, refreshToken } = data;
+	console.log(data)
 	async () => {
 		try {
 			await EncryptedStorage.setItem("user_session", JSON.stringify({
@@ -152,7 +153,7 @@ export const register = createAppAsyncThunk<
 	makeApiRequest<RegisterResponse>({
 		url: `${BACKEND_API_URL}/auth/register/`,
 		method: 'post',
-		data: { password, first_name, last_name, email,  username },
+		data: { password, username, first_name, last_name, email  },
 	}, { dispatch, sessionTokens: selectSessionTokens(state) })
 );
 

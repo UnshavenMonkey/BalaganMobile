@@ -50,7 +50,9 @@ const RegisterScreen: FC<Props> = ({navigation}) => {
 				last_name: lastName,
 				password: password
 			};
-			await dispatch(register.getThunk({...data})).then(res => console.log(res));
+
+			await dispatch(register.getThunk({...data}));
+
 			navigation.navigate('Login');
 		} catch (e) {
 			console.log(e)

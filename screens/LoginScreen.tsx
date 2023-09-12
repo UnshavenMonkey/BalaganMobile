@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,11 +9,53 @@ import CustomButton from '../components/CustomButton';
 import InputField from "../components/InputField";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../types";
+import {useAppDispatch} from "../app/store";
+import {isAxiosError} from "axios";
+import {login} from "../features/system/system-slice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
 const LoginScreen: FC<Props> = ({navigation}) => {
-    return (
+  const dispatch = useAppDispatch();
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const handleLogin = async () => {
+    let isInputValid = true;
+
+    const emailTrimmed = email.trim();
+    if (!emailTrimmed.length) {
+      setEmailError("Поле обязательно");
+      isInputValid = false;
+    }
+
+    if (!password) {
+      setPasswordError("Поле обязательно");
+      isInputValid = false;
+    }
+
+    if (!isInputValid) return;
+
+    try {
+      await dispatch(
+        login.getThunk({ email: emailTrimmed, password })
+      );
+      navigation.navigate('Home');
+    } catch (e) {
+      if (isAxiosError(e) && e.response?.data) {
+        setPasswordError('Неправильный логин или пароль');
+      } else {
+        throw e;
+      }
+    }
+  };
+
+
+
+
+  return (
       <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
         <View style={{paddingHorizontal: 25}}>
           <View style={{alignItems: 'center'}}>
@@ -38,15 +80,18 @@ const LoginScreen: FC<Props> = ({navigation}) => {
           <InputField
             label={'Email'}
             keyboardType="email-address"
+            onChangeText={setEmail}
           />
+          <Text style={{color: 'red', marginBottom: 5}}>{emailError}</Text>
 
           <InputField
             label={'Password'}
             inputType="password"
-            fieldButtonFunction={() => {}}
+            onChangeText={setPassword}
           />
+          <Text style={{color: 'red', marginBottom: 5}}>{passwordError}</Text>
 
-          <CustomButton label={'Login'} onPress={() => {}} />
+          <CustomButton label={'Login'} onPress={handleLogin} />
 
           <View
             style={{
@@ -54,7 +99,7 @@ const LoginScreen: FC<Props> = ({navigation}) => {
               justifyContent: 'center',
               marginBottom: 30,
             }}>
-            <Text>New to the app?</Text>
+            <Text>Первый раз?</Text>
             <Pressable onPress={() => navigation.navigate('Register')}>
               <Text style={{color: '#20315f', fontWeight: '700'}}>
                 {' '}

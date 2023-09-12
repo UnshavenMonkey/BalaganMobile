@@ -12,7 +12,6 @@ const HomeScreen = () => {
   );
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <ScrollView style={{padding: 20}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20}}>
           <Text style={{fontSize: 16}}>Hello Joe</Text>
           <ImageBackground source={require('../assets/tucan.png')} style={{width: 35, height: 35}} imageStyle={{borderRadius: 25}} />
@@ -27,7 +26,6 @@ const HomeScreen = () => {
             keyExtractor={item => item.id}
           />
         </View>
-      </ScrollView>
     </SafeAreaView>
   )
 }
