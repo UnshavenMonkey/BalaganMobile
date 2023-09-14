@@ -69,7 +69,7 @@ const RegisterScreen: FC<Props> = ({navigation}) => {
 				style={{flex: 1, paddingHorizontal: 25, paddingTop: 15}}>
 				<View style={{alignItems: 'center'}}>
 					<Image
-						style={{width: 100, height: 100}}
+						style={{width: 200, height: 200}}
 						source={require('../assets/registration.jpg')}
 					/>
 				</View>
