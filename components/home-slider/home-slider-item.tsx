@@ -12,9 +12,8 @@ import React, { FC } from 'react';
 const {width, height} = Dimensions.get('screen');
 
 type HomeSlideItemProps = {
-  item: {id: number;
-	img: any;}
-}
+  item: {id: number; img: any};
+};
 
 const HomeSlideItem: FC<HomeSlideItemProps> = (item) => {
 
