@@ -11,8 +11,16 @@ import {
 } from 'react-native';
 import HomeSlider from '../components/home-slider';
 import PostsList from '../features/posts/posts-list';
+import {getStateFromAsyncStorage} from "../common-utils";
+import {useAppSelector} from "../app/store";
+import {selectAccessToken, selectIsLoggedIn} from "../features/system/system-slice";
 
 const HomeScreen = () => {
+  const isLogged = useAppSelector(selectIsLoggedIn);
+  const at = useAppSelector(selectAccessToken)
+  console.log('home', isLogged)
+  console.log('at', at)
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View

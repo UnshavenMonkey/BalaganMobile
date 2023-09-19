@@ -5,7 +5,7 @@ import {createAppAsyncThunk, makeApiRequest} from "../../common-utils";
 import axios from 'axios';
 import {BACKEND_API_URL} from "../../common-consts";
 
-type SystemState = {
+export type SystemState = {
 	userId: string | null;
 	accessToken: string | null;
 	refreshToken: string | null;
@@ -34,12 +34,12 @@ const systemSlice = createSlice({
 		builder
 			.addCase(login.fulfilled, (state, { payload }) => {
 				state.userId = payload.id;
-				state.accessToken = payload.accessToken;
-				state.refreshToken = payload.refreshToken;
+				state.accessToken = payload.access;
+				state.refreshToken = payload.refresh;
 			})
 			.addCase(setSessionTokensAction, (state, { payload }) => {
-				state.accessToken = payload.accessToken;
-				state.refreshToken = payload.refreshToken;
+				state.accessToken = payload.access;
+				state.refreshToken = payload.refresh;
 			})
 	},
 });
@@ -65,19 +65,19 @@ export const selectRefreshToken = createSelector(
 
 export const selectSessionTokens = createSelector(
 	[selectAccessToken, selectRefreshToken],
-	(accessToken, refreshToken) =>
-		!!accessToken && !!refreshToken ? { accessToken, refreshToken } : null
+	(access, refresh) =>
+		!!access && !!refresh ? { access, refresh } : null
 );
 
 export const selectIsLoggedIn = createSelector(
 	[selectSessionUserId, selectAccessToken, selectRefreshToken],
-	(sessionUserId, accessToken, refreshToken) =>
-		!!sessionUserId && !!accessToken && !!refreshToken
+	(sessionUserId, access, refresh) =>
+		!!sessionUserId && !!access && !!refresh
 );
 
 export type SessionTokens = {
-	accessToken: string;
-	refreshToken: string;
+	access: string;
+	refresh: string;
 };
 
 const setSessionTokensAction = createAction<SessionTokens>(
@@ -90,8 +90,8 @@ export function setSessionTokens(tokens: SessionTokens): AppThunk<void> {
 		async () => {
 			try {
 				await EncryptedStorage.setItem("user_session", JSON.stringify({
-					bmAccessToken: tokens.accessToken,
-					bmRefreshToken: tokens.refreshToken,
+					bmAccessToken: tokens.access,
+					bmRefreshToken: tokens.refresh,
 				}))
 			}
 			catch (error) {
@@ -112,13 +112,12 @@ export const login = createAppAsyncThunk<
 		method: 'post',
 		data: { email, password },
 	});
-	const { id, accessToken, refreshToken } = data;
-	console.log(data)
+	const { id, access, refresh } = data;
 	async () => {
 		try {
 			await EncryptedStorage.setItem("user_session", JSON.stringify({
-				bmAccessToken: accessToken,
-				bmRefreshToken: refreshToken,
+				bmAccessToken: access,
+				bmRefreshToken: refresh,
 				userId: id,
 			}))
 		}
