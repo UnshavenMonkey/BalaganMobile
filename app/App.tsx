@@ -1,12 +1,12 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AuthStack from '../navigation/AuthStack';
-import {createAppStore} from "./store";
-import { Provider } from 'react-redux';
-import {getStateFromAsyncStorage} from "../common-utils";
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AuthStack from '../navigation/auth-stack';
+import {createAppStore} from './store';
+import {Provider} from 'react-redux';
+import {getStateFromAsyncStorage} from '../common-utils';
 
-const state = getStateFromAsyncStorage()
+const state = getStateFromAsyncStorage();
 
 const store = createAppStore(state);
 
@@ -23,7 +23,7 @@ const App = () => {
         <AuthStack />
       </NavigationContainer>
     </Provider>
-  )
-}
+  );
+};
 
 export default App;

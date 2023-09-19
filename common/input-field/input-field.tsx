@@ -1,15 +1,22 @@
 import React, {FC} from 'react';
-import {View, Text, Pressable, TextInput, KeyboardTypeOptions, GestureResponderEvent} from 'react-native';
+import {
+  GestureResponderEvent,
+  KeyboardTypeOptions,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 type InputFieldProps = {
-  value?: string,
+  value?: string;
   onChangeText?: ((text: string) => void) | undefined;
-  label?: string,
-  inputType?: string,
-  keyboardType?: KeyboardTypeOptions | undefined,
-  fieldButtonLabel?: string,
-  fieldButtonFunction?: (event: GestureResponderEvent) => void,
-}
+  label?: string;
+  inputType?: string;
+  keyboardType?: KeyboardTypeOptions | undefined;
+  fieldButtonLabel?: string;
+  fieldButtonFunction?: (event: GestureResponderEvent) => void;
+};
 const InputField: FC<InputFieldProps> = ({
   label,
   onChangeText,
@@ -44,10 +51,12 @@ const InputField: FC<InputFieldProps> = ({
         />
       )}
       <Pressable onPress={fieldButtonFunction}>
-        <Text style={{color: '#20315f', fontWeight: '700'}}>{fieldButtonLabel}</Text>
+        <Text style={{color: '#20315f', fontWeight: '700'}}>
+          {fieldButtonLabel}
+        </Text>
       </Pressable>
     </View>
   );
-}
+};
 
 export default InputField;

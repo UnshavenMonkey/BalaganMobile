@@ -9,7 +9,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import HomeSlider from '../components/home-slider';
+import HomeSlider from '../features/home-slider';
 import PostsList from '../features/posts/posts-list';
 
 const HomeScreen = () => {
