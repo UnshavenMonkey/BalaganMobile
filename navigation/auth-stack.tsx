@@ -4,12 +4,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import OnboardingScreen from '../screens/OnboardScreen';
+<<<<<<< HEAD:navigation/AuthStack.tsx
 import {RootStackParamList} from "../types";
 import HomeScreen from "../screens/HomeScreen";
 import {useDispatch} from "react-redux";
 import {getStateFromAsyncStorage} from "../common-utils";
 import {useAppSelector} from "../app/store";
 import {selectAccessToken, selectIsLoggedIn} from "../features/system/system-slice";
+=======
+import {RootStackParamList} from '../types';
+import HomeScreen from '../screens/HomeScreen';
+>>>>>>> 90112b38b3c393dcb91c2eb1c3c1d59cd4aad673:navigation/auth-stack.tsx
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

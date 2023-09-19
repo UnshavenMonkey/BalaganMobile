@@ -8,7 +8,6 @@ type ItemProps = {title: string};
 const PostsList: FC = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectPosts);
-
   useEffect(() => {
     dispatch(getPosts.getThunk({}));
   }, [dispatch]);
