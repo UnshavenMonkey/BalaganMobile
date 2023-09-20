@@ -7,7 +7,7 @@ import {
 import axios, {isAxiosError, RawAxiosRequestConfig} from 'axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {AppDispatch, AppThunk, RootState} from './app/store';
-import {SessionTokens, setSessionTokens} from './features/system/system-slice';
+import {SessionTokens, setSessionTokens, setUserId} from './features/system/system-slice';
 import {BACKEND_API_URL} from './common-consts';
 
 export const getStateFromAsyncStorage = (dispatch: AppDispatch) => {
@@ -16,13 +16,7 @@ export const getStateFromAsyncStorage = (dispatch: AppDispatch) => {
       const session = await EncryptedStorage.getItem('user_session');
       if (!!session) {
         dispatch(setSessionTokens({access: JSON.parse(session).bmAccessToken, refresh: JSON.parse(session).bmRefreshToken}))
-        // return {
-        //   system: {
-        //     userId: 'JSON.parse(session).userId',
-        //     accessToken: 'JSON.parse(session).bmAccessToken',
-        //     refreshToken: 'JSON.parse(session).bmRefreshToken',
-        //   },
-        // };
+        dispatch(setUserId(JSON.parse(session).userId))
       }
     } catch (error) {
       console.log(error);

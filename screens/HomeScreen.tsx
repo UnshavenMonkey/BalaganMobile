@@ -13,13 +13,20 @@ import HomeSlider from '../features/home-slider';
 import PostsList from '../features/posts/posts-list';
 import {getStateFromAsyncStorage} from "../common-utils";
 import {useAppSelector} from "../app/store";
-import {selectAccessToken, selectIsLoggedIn} from "../features/system/system-slice";
+import {logout, selectAccessToken, selectIsLoggedIn} from "../features/system/system-slice";
+import CustomButton from "../common/custom-button";
+import {useDispatch} from "react-redux";
 
 const HomeScreen = () => {
-  const isLogged = useAppSelector(selectIsLoggedIn);
-  const at = useAppSelector(selectAccessToken)
-  console.log('home', isLogged)
-  console.log('at', at)
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+      try {
+        // @ts-ignore
+        await dispatch(logout.getThunk({}));
+      } catch (e) {
+        console.log(e)
+      }
+  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -29,7 +36,7 @@ const HomeScreen = () => {
           justifyContent: 'space-between',
           marginBottom: 20,
         }}>
-        <Text style={{fontSize: 16}}>Hello</Text>
+        <CustomButton label={'Logout'} onPress={handleLogout} />
         <ImageBackground
           source={require('../assets/tucan.png')}
           style={{width: 35, height: 35}}

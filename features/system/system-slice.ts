@@ -19,7 +19,6 @@ type UserType = {
 	id: string;
 };
 
-
 export const SYSTEM_INITIAL_STATE: SystemState = {
 	userId: null,
 	accessToken: null,
@@ -33,13 +32,17 @@ const systemSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(login.fulfilled, (state, { payload }) => {
-				state.userId = payload.id;
+				state.userId = payload.user.id;
 				state.accessToken = payload.access;
 				state.refreshToken = payload.refresh;
 			})
+			.addCase(logout.fulfilled, () => SYSTEM_INITIAL_STATE)
 			.addCase(setSessionTokensAction, (state, { payload }) => {
 				state.accessToken = payload.access;
 				state.refreshToken = payload.refresh;
+			})
+			.addCase(setUserIdAction, (state, { payload }) => {
+				state.userId = payload;
 			})
 	},
 });
@@ -84,10 +87,18 @@ const setSessionTokensAction = createAction<SessionTokens>(
 	'system/setSessionTokens'
 );
 
+const setUserIdAction = createAction<string>(
+	'system/setUserId'
+);
+
+export function setUserId(id: string): AppThunk<void> {
+	return dispatch => dispatch(setUserIdAction(id))
+}
+
 export function setSessionTokens(tokens: SessionTokens): AppThunk<void> {
 	return (dispatch) => {
 		dispatch(setSessionTokensAction(tokens));
-		async () => {
+		const setStorage = async () => {
 			try {
 				await EncryptedStorage.setItem("user_session", JSON.stringify({
 					bmAccessToken: tokens.access,
@@ -98,10 +109,21 @@ export function setSessionTokens(tokens: SessionTokens): AppThunk<void> {
 				console.log(error)
 			}
 		}
+		setStorage()
 	};
 }
 
-type LoginResponse = SessionTokens & UserType;
+type LoginResponse = {
+  access: string;
+  refresh: string;
+  user: {
+    email: string;
+    userName: string;
+    firstName: string | null;
+    lastName: string | null;
+    id: string;
+  };
+};
 
 export const login = createAppAsyncThunk<
 	{ email: string; password: string },
@@ -112,19 +134,21 @@ export const login = createAppAsyncThunk<
 		method: 'post',
 		data: { email, password },
 	});
-	const { id, access, refresh } = data;
-	async () => {
+	const { user, access, refresh } = data;
+
+	const setStorage = async () => {
 		try {
 			await EncryptedStorage.setItem("user_session", JSON.stringify({
 				bmAccessToken: access,
 				bmRefreshToken: refresh,
-				userId: id,
+				userId: user.id,
 			}))
 		}
 		catch (error) {
 			console.log(error)
 		}
 	}
+	setStorage()
 	return data;
 });
 
@@ -154,6 +178,23 @@ export const register = createAppAsyncThunk<
 		method: 'post',
 		data: { password, username, first_name, last_name, email  },
 	}, { dispatch, sessionTokens: selectSessionTokens(state) })
+);
+
+export const logout = createAppAsyncThunk<{}, void>(
+	'system/logout',
+	async (_, { dispatch, state }) => {
+		await makeApiRequest<void>(
+			{ url: `${BACKEND_API_URL}/auth/logout`, method: 'post' },
+			{ dispatch, sessionTokens: selectSessionTokens(state) }
+		);
+		async function clearStorage() {
+			try {
+				await EncryptedStorage.clear();
+			} catch (error) {
+			}
+		}
+		clearStorage()
+	}
 );
 
 
