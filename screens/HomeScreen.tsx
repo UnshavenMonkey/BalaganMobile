@@ -12,20 +12,16 @@ import {
 import HomeSlider from '../features/home-slider';
 import PostsList from '../features/posts/posts-list';
 import {getStateFromAsyncStorage} from "../common-utils";
-import {useAppSelector} from "../app/store";
+import {useAppDispatch, useAppSelector} from "../app/store";
 import {logout, selectAccessToken, selectIsLoggedIn} from "../features/system/system-slice";
 import CustomButton from "../common/custom-button";
 import {useDispatch} from "react-redux";
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
-  const handleLogout = async () => {
-      try {
-        // @ts-ignore
-        await dispatch(logout.getThunk({}));
-      } catch (e) {
-        console.log(e)
-      }
+  const dispatch = useAppDispatch();
+  const handleLogout =  () => {
+
+        dispatch(logout.getThunk({}));
   };
 
   return (

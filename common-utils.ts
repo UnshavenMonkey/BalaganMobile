@@ -111,9 +111,9 @@ export async function makeApiRequest<ReturnType>(
     if (sessionTokens && isAxiosError(e) && e.response?.status === 401) {
       const {data: newTokens} = await axios<SessionTokens>({
         ...requestConfig,
-        url: `${BACKEND_API_URL}/auth/refresh`,
+        url: `${BACKEND_API_URL}/auth/refresh/`,
         method: 'post',
-        data: {refreshToken: sessionTokens.refresh},
+        data: {refresh: sessionTokens.refresh},
         //transformResponse: (data) => JsonBigInt.parse(data),
       });
       if (newTokens) {

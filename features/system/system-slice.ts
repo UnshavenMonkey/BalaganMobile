@@ -1,6 +1,6 @@
 import {createAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import EncryptedStorage from "react-native-encrypted-storage";
-import {AppThunk, RootState} from "../../app/store";
+import {AppThunk, RootState, useAppSelector} from "../../app/store";
 import {createAppAsyncThunk, makeApiRequest} from "../../common-utils";
 import axios from 'axios';
 import {BACKEND_API_URL} from "../../common-consts";
@@ -184,7 +184,7 @@ export const logout = createAppAsyncThunk<{}, void>(
 	'system/logout',
 	async (_, { dispatch, state }) => {
 		await makeApiRequest<void>(
-			{ url: `${BACKEND_API_URL}/auth/logout`, method: 'post' },
+			{ url: `${BACKEND_API_URL}/auth/logout/`, method: 'post', data: { refresh: {refresh: selectSessionTokens(state)?.refresh, access: selectSessionTokens(state)?.access }}},
 			{ dispatch, sessionTokens: selectSessionTokens(state) }
 		);
 		async function clearStorage() {
@@ -193,7 +193,7 @@ export const logout = createAppAsyncThunk<{}, void>(
 			} catch (error) {
 			}
 		}
-		clearStorage()
+		await clearStorage()
 	}
 );
 
