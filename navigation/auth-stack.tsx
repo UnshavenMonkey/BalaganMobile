@@ -26,6 +26,8 @@ const AuthStack = () => {
     getStateFromAsyncStorage(dispatch);
   }, [dispatch]);
 
+  console.log('islogged', isLogged)
+
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       {isLogged ? (

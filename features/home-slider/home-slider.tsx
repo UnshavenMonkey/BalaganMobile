@@ -1,7 +1,8 @@
-import {Animated, FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useRef, useState} from 'react';
+import {Animated, Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
 import Slides from './data';
 import HomeSlideItem from './home-slider-item';
+import Pagination from './pagination';
 
 const HomeSlider = () => {
 	const [index, setIndex] = useState(0);
@@ -35,7 +36,7 @@ const HomeSlider = () => {
 
 	// @ts-ignore
 	return (
-		<View>
+		<View style={{marginBottom: 20}}>
 			<FlatList
 				data={Slides}
 				renderItem={({item}) => <HomeSlideItem item={item} />}
@@ -46,7 +47,11 @@ const HomeSlider = () => {
 				onScroll={handleOnScroll}
 				onViewableItemsChanged={handleOnViewableItemsChanged}
 				viewabilityConfig={viewabilityConfig}
+				initialNumToRender={3}
+				keyExtractor={item => item.id.toString()}
+
 			/>
+			<Pagination data={Slides} scrollX={scrollX} index={index} />
 		</View>
 	);
 };

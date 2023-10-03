@@ -19,10 +19,13 @@ import {useDispatch} from "react-redux";
 
 const HomeScreen = () => {
   const dispatch = useAppDispatch();
+  const isLogged = useAppSelector(selectIsLoggedIn);
   const handleLogout =  () => {
 
         dispatch(logout.getThunk({}));
   };
+
+  console.log('islogged home', isLogged)
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -32,7 +35,7 @@ const HomeScreen = () => {
           justifyContent: 'space-between',
           marginBottom: 20,
         }}>
-        <CustomButton label={'Logout'} onPress={handleLogout} />
+        {/*<CustomButton label={'Logout'} onPress={handleLogout} />*/}
         <ImageBackground
           source={require('../assets/tucan.png')}
           style={{width: 35, height: 35}}
@@ -42,7 +45,10 @@ const HomeScreen = () => {
       <View style={{flex: 1}}>
         <HomeSlider />
       </View>
-      <PostsList />
+      <View style={{flex: 2}}>
+        <PostsList />
+      </View>
+
     </SafeAreaView>
   );
 };
