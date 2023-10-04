@@ -9,7 +9,7 @@ import {
 import React, {FC, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {getPosts, selectPosts} from '../posts-slice';
-import { Card } from 'react-native-paper';
+import { Card, Text as TextR } from 'react-native-paper';
 
 type ItemProps = {title: string};
 
@@ -24,9 +24,10 @@ const PostsList: FC = () => {
 
   const Item = ({title}: ItemProps) => (
     <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
       <Card>
+        <Card.Title title={title} titleStyle={{textAlign: 'center'}} />
         <Card.Cover source={require('../../../assets/fefaultpost.jpg')} />
+        <Card.Content><TextR variant="bodyMedium">Тут должно быть описание события. Это может быть что угодно</TextR></Card.Content>
       </Card>
     </View>
   );

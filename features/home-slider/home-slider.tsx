@@ -36,7 +36,7 @@ const HomeSlider = () => {
 
   // @ts-ignore
   return (
-    <View style={{marginBottom: 20}}>
+    <View>
       <FlatList
         data={Slides}
         renderItem={({item}) => <HomeSlideItem item={item} />}

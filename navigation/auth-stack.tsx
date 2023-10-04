@@ -15,6 +15,7 @@ import {
 } from '../features/system/system-slice';
 import {getStateFromAsyncStorage} from '../common-utils';
 import HomeScreen from '../screens/HomeScreen';
+import BottomNavigation from "../common/bottom-navigation";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -31,7 +32,10 @@ const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       {isLogged ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+
+          </>
 
       ) : (
         <>

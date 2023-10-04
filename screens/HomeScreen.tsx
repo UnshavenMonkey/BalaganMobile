@@ -20,10 +20,15 @@ import {
 } from '../features/system/system-slice';
 import CustomButton from '../common/custom-button';
 import {useDispatch} from 'react-redux';
+import {Avatar, Searchbar} from "react-native-paper";
+import BottomNavigation from '../common/bottom-navigation';
 
 const HomeScreen = () => {
   const dispatch = useAppDispatch();
   const isLogged = useAppSelector(selectIsLoggedIn);
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = (query: string) => setSearchQuery(query);
   const handleLogout = () => {
     dispatch(logout.getThunk({}));
   };
@@ -31,26 +36,24 @@ const HomeScreen = () => {
   console.log('islogged home', isLogged);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 20,
-        }}>
-        {/*<CustomButton label={'Logout'} onPress={handleLogout} />*/}
-        <ImageBackground
-          source={require('../assets/tucan.png')}
-          style={{width: 35, height: 35}}
-          imageStyle={{borderRadius: 25}}
-        />
+    <SafeAreaView style={{flex: 4, backgroundColor: '#fff'}}>
+      <View style={{margin: 10}}>
+        <Avatar.Text size={36} label="XD" />
       </View>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, marginBottom: 50}}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+        />
         <HomeSlider />
       </View>
-      <View style={{flex: 2}}>
+      <View style={{flex: 2.5}}>
         <PostsList />
       </View>
+      {/*<View>*/}
+      {/*  <BottomNavigation />*/}
+      {/*</View>*/}
     </SafeAreaView>
   );
 };
