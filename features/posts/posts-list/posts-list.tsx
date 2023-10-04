@@ -1,13 +1,23 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {FC, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {getPosts, selectPosts} from '../posts-slice';
+import { Card } from 'react-native-paper';
 
 type ItemProps = {title: string};
 
 const PostsList: FC = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectPosts);
+  const {width: windowWidth, height: windowHeight} = Dimensions.get('screen');
+
   useEffect(() => {
     dispatch(getPosts.getThunk({}));
   }, [dispatch]);
@@ -15,6 +25,9 @@ const PostsList: FC = () => {
   const Item = ({title}: ItemProps) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
+      <Card>
+        <Card.Cover source={require('../../../assets/fefaultpost.jpg')} />
+      </Card>
     </View>
   );
   return (
@@ -30,13 +43,13 @@ const PostsList: FC = () => {
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    // padding: 20,
+    // marginVertical: 8,
+    // marginHorizontal: 16,
   },
   title: {
     fontSize: 32,
+    textAlign: 'center',
   },
 });
 

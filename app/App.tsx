@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthStack from '../navigation/auth-stack';
-import {createAppStore, RootState} from './store';
-import {Provider, useDispatch} from 'react-redux';
-import {getStateFromAsyncStorage} from '../common-utils';
+import {createAppStore} from './store';
+import {Provider} from 'react-redux';
+import {PaperProvider} from 'react-native-paper';
 
 const store = createAppStore();
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <AuthStack />
-      </NavigationContainer>
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<PaperProvider>
+				<NavigationContainer>
+					<AuthStack/>
+				</NavigationContainer>
+			</PaperProvider>
+		</Provider>
+	);
 };
 
 export default App;

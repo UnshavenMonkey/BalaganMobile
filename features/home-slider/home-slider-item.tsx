@@ -1,22 +1,12 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Animated,
-  Easing,
-} from 'react-native';
+import {Image, Text, View, Dimensions} from 'react-native';
 import React, {FC} from 'react';
-
-const {width, height} = Dimensions.get('screen');
 
 type HomeSlideItemProps = {
   item: {id: number; img: any; text: string};
 };
 
 const HomeSlideItem: FC<HomeSlideItemProps> = item => {
-  const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+  const {width: windowWidth, height: windowHeight} = Dimensions.get('screen');
 
   return (
     <View
@@ -25,9 +15,9 @@ const HomeSlideItem: FC<HomeSlideItemProps> = item => {
         width: windowWidth,
         alignItems: 'center',
         justifyContent: 'center',
-				marginTop: 10,
+        marginTop: 10,
       }}>
-			<Text style={{fontSize: 18}}>{item.item.text}</Text>
+      <Text style={{fontSize: 18}}>{item.item.text}</Text>
       <Image
         source={item.item.img}
         resizeMode="cover"

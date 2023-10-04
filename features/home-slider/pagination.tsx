@@ -5,7 +5,7 @@ const {width} = Dimensions.get('screen');
 
 // @ts-ignore
 const Pagination = ({data, scrollX, index}) => {
-	return (
+  return (
     <View style={styles.container}>
       {data.map((_: any, idx: number) => {
         const inputRange = [(idx - 1) * width, idx * width, (idx + 1) * width];
@@ -34,7 +34,7 @@ const Pagination = ({data, scrollX, index}) => {
             style={[
               styles.dot,
               {width: dotWidth, backgroundColor},
-              // idx === index && styles.dotActive,
+              idx === index && styles.dotActive,
             ]}
           />
         );
@@ -46,22 +46,22 @@ const Pagination = ({data, scrollX, index}) => {
 export default Pagination;
 
 const styles = StyleSheet.create({
-	container: {
-		position: 'absolute',
-		bottom: 35,
-		flexDirection: 'row',
-		width: '100%',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	dot: {
-		width: 12,
-		height: 12,
-		borderRadius: 6,
-		marginHorizontal: 3,
-		backgroundColor: '#ccc',
-	},
-	dotActive: {
-		backgroundColor: '#000',
-	},
+  container: {
+    position: 'absolute',
+    bottom: 35,
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginHorizontal: 3,
+    backgroundColor: '#ccc',
+  },
+  dotActive: {
+    backgroundColor: '#131313',
+  },
 });
