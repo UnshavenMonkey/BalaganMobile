@@ -1,4 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import BottomNavigation from "./common/bottom-navigation";
 
 declare global {
 	namespace ReactNavigation {
@@ -10,7 +11,7 @@ export type RootStackParamList = {
 	Login: undefined;
 	Register: undefined;
 	Onboarding: undefined;
-	Home: undefined;
+	BottomNavigation: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

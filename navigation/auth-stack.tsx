@@ -27,14 +27,11 @@ const AuthStack = () => {
     getStateFromAsyncStorage(dispatch);
   }, [dispatch]);
 
-  console.log('islogged', isLogged)
-
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       {isLogged ? (
           <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-
+            <Stack.Screen name="BottomNavigation" component={BottomNavigation} />
           </>
 
       ) : (
@@ -42,7 +39,6 @@ const AuthStack = () => {
           <Stack.Screen name="Onboarding" component={OnboardingScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
         </>
       )}
     </Stack.Navigator>

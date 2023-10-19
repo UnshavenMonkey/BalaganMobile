@@ -33,8 +33,6 @@ const HomeScreen = () => {
     dispatch(logout.getThunk({}));
   };
 
-  console.log('islogged home', isLogged);
-
   return (
     <SafeAreaView style={{flex: 4, backgroundColor: '#fff'}}>
       <View style={{margin: 10}}>
